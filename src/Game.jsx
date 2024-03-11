@@ -1,36 +1,45 @@
 import { useState, useEffect } from "react";
 import PokeCard from "./PokeCard";
+import { Grid, CircularProgress, styled, Paper } from "@mui/material";
 
-export default function Game() {
-    const [ pokemonData, setPokemonData ] = useState({});
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
+
+export default function Game({ size }) {  
+    const [ pokemonList, setPokemonList ] = useState([]);
     const [ error, setError ] = useState(null);
     const [ loading, setLoading ] = useState(true);
-
-    async function getPokemonData(id) {
-	const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-	fetch(url)
-	    .then(res => {
-                if(res.status >= 400)
-                    throw new Error('server error');
-                return res.json();
-            })
-            .then(data => { setPokemonData(data) })
-            .catch(error => { setError(error) })
-            .finally(() => { setLoading(false) });
-    };
+    
+    const idList = Array.from({
+	length: size
+    }, () => Math.floor(Math.random() * 600));
     
     useEffect(() => {
-	getPokemonData(25);
-	if(!error) {
-	    console.log(pokemonData);
-	} else {
-	    console.log(error);
-	}
+	console.log("promise effect running");
+	const promises = idList.map(id =>
+	    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`));
+	
+	Promise.all(promises)
+	    .then(responses =>
+		Promise.all(responses.map(res =>
+		    res.json())))
+	    .then(data => { setPokemonList(data) })
+	    .catch(err => { setError(err) })
+	    .finally(() => { setLoading(false) });
     }, []);
-    
-    return (
-	<>
-	    {loading ? <h1>loading</h1> : <PokeCard data={pokemonData} />}
-	</>
-    );
+
+    if(loading) {
+	return <CircularProgress />;
+    }
+    else {
+	return (
+	    <>
+	    </>
+	);
+    }
 }
