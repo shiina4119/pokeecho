@@ -2,5 +2,5 @@ import Game from "./Game";
 import "./App.css";
 
 export default function App() {
-    return <Game size={10} />
+    return <Game size={15} />
 }

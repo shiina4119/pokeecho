@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import PokeCard from "./PokeCard";
 import { Grid, CircularProgress, styled, Paper } from "@mui/material";
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import "./Game.css";
 
 export default function Game({ size }) {  
     const [ pokemonList, setPokemonList ] = useState([]);
@@ -17,7 +10,7 @@ export default function Game({ size }) {
     
     const idList = Array.from({
 	length: size
-    }, () => Math.floor(Math.random() * 600));
+    }, () => Math.floor(Math.random() * 600) + 1);
     
     useEffect(() => {
 	console.log("promise effect running");
@@ -33,12 +26,24 @@ export default function Game({ size }) {
 	    .finally(() => { setLoading(false) });
     }, []);
 
+    function handleClick() {
+	console.log("clicked");
+	setPokemonList((prevPokemonList) => [...prevPokemonList].sort(() => Math.random() - 0.5));
+    };
+
     if(loading) {
 	return <CircularProgress />;
     }
     else {
 	return (
 	    <>
+		<div className="container">
+		    {pokemonList.map(pokemonData =>
+			<button key={pokemonData.id} className="card-button" onClick={() => { handleClick() }}>
+			    <PokeCard data={pokemonData} />
+			</button>
+		    )}
+		</div>
 	    </>
 	);
     }

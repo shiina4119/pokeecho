@@ -1,0 +1,18 @@
+.card {
+    border: 1px solid;
+    background: white;
+}
+
+.card img {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+}
+
+.card-details {
+    background: turquoise;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+}
+
