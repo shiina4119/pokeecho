@@ -1,15 +1,62 @@
+#header {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 20px;
+    justify-content: space-between;
+}
+
+#header div { /*score*/
+    background-color: #ffffe4;
+    border: 2px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 2px 2px 0px 0px;
+    position: relative;
+    text-align: end;
+}
+
 .container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: 20px 40px; 
+    gap: 2em 4em;
+    padding: 2em 1em;
 }
 
-.card-button {
-    border: none;   
-    padding: 0;
-    text-align: center;
+#new-game-button-div {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.btn {
+    color: #000;
+    cursor: pointer;
+    border: 2px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 2px 2px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn:active {
+    box-shadow: 0px 0px 0px 0px;
+    top: 5px;
+    left: 5px;
+}
+
+@media (min-width: 768px) {
+    .btn {
+	padding: 0.25em 0.75em;
+    }
+}
+
+.typography {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
     text-decoration: none;
-    display: inline-block;
+    text-transform: uppercase;
 }
