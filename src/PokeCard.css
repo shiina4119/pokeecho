@@ -1,5 +1,5 @@
 .card img {
-    object-fit: contain;
+    object-fit: cover;
     width: 12em;
     height: 12em;
 }
