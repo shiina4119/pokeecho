@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Game from "./Game";
 import "./App.css";
 
 export default function App() {
-    return <Game size={15} />
+    const [ size, setSize ] = useState(15);
+    return <Game size={size} />
 }
