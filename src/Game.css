@@ -7,10 +7,6 @@
 
 #header div { /*score*/
     background-color: #ffffe4;
-    border: 2px solid;
-    padding: 0.25em 0.5em;
-    box-shadow: 2px 2px 0px 0px;
-    position: relative;
     text-align: end;
 }
 
@@ -23,22 +19,16 @@
     padding: 2em 1em;
 }
 
-#new-game-button-div {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+.component {
+    border: 2px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 2px 2px 0px 0px;
+    position: relative;
 }
 
 .btn {
     color: #000;
     cursor: pointer;
-    border: 2px solid;
-    padding: 0.25em 0.5em;
-    box-shadow: 2px 2px 0px 0px;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
 }
 
 .btn:active {
@@ -47,15 +37,12 @@
     left: 5px;
 }
 
-@media (min-width: 768px) {
-    .btn {
-	padding: 0.25em 0.75em;
-    }
-}
-
 .typography {
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
     letter-spacing: 2px;
     text-decoration: none;
     text-transform: uppercase;
