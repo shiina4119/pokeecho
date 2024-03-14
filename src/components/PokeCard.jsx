@@ -1,10 +1,10 @@
 import "../styles/PokeCard.css";
 
-export default function PokeCard({ data }) {
+export default function PokeCard({ pokemon }) {
     return (
 	<div className="card">
-	    <img src={data.sprites.front_default} alt={data.name} />
-	    <div className="typography">{data.name}</div>
+	    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+	    <div className="typography">{pokemon.name}</div>
 	</div>
     );
 }
