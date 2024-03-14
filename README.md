@@ -1,7 +1,12 @@
 # PokéEcho
 
 A simple memory card game with Pokémons.
+Built using React and Vite.
 
-TODO:
+To build locally run
 
-- add winning screen or game over screen
+``` shell
+npm run build
+npm run preview
+```
+
