@@ -6,3 +6,5 @@ export function createRandomArray(size) {
     }
     return arr;
 }
+
+export const shuffleArray = arr => arr.sort(() => Math.random() - 0.5)

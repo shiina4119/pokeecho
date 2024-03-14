@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PokeCard from "../components/PokeCard";
 import "../styles/Game.css";
-import { createRandomArray } from "../utilities";
+import { createRandomArray, shuffleArray } from "../utilities";
 
 export default function Game({ size }) {
-    const [idList, setIdList] = useState(createRandomArray(size));
-
-    const [allPokemonData, setAllPokemonData] = useState([]);
+    const [pokemonList, setPokemonList] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const [idList, setIdList] = useState(createRandomArray(size));
     const [clickedIdList, setClickedIdList] = useState([]);
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
@@ -24,8 +22,8 @@ export default function Game({ size }) {
 	Promise.all(promises)
 	    .then((responses) => Promise.all(responses.map((res) =>
 		res.json())))
-	    .then((data) => {
-		setAllPokemonData(data);
+	    .then((list) => {
+		setPokemonList(list);
 	    })
 	    .catch((err) => {
 		setError(err);
@@ -35,7 +33,7 @@ export default function Game({ size }) {
 		setLoading(false);
 	    });
 	return (() => {
-	    setAllPokemonData([]);
+	    setPokemonList([]);
 	    setError(null);
 	    setLoading(false);
 	})
@@ -56,9 +54,8 @@ export default function Game({ size }) {
 		setGameOver(true);
 	    }
 	    else {
-		setAllPokemonData((prevPokemonData) =>
-		    [...prevPokemonData].sort(() =>
-			Math.random() - 0.5)
+		setPokemonList((prevPokemonList) =>
+		    shuffleArray(prevPokemonList)
 		);
 	    }
 	}
@@ -72,15 +69,21 @@ export default function Game({ size }) {
     }
 
     if (gameOver === true) return (
-	<div className="banner component">
+	<div className="component banner">
 	    {score === size ?
 	     <>
-		 <div className="typography" style={{ fontSize: "24px" }}>You Won!</div>
+		 <div className="typography"
+		      style={{ fontSize: "24px" }}>
+		     You Won!
+		 </div>
 		 <img src="/cat-flower.jpeg" />
 	     </>
 	     :
 	     <>
-		 <div className="typography" style={{ fontSize: "24px" }}>Game Over</div>
+		 <div className="typography"
+		      style={{ fontSize: "24px" }}>
+		     Game Over
+		 </div>
 		 <img src="/laugh-point.gif" />
 	     </>
 	    }
@@ -88,19 +91,19 @@ export default function Game({ size }) {
 		<p>Score: {score}</p>
 		<p>High Score: {highScore}</p>
 	    </div>
-	    <Link to="/">
+	    <div className="container">
 		<button
+		    onClick={() => handleNewGameButton()}
 		    className="component btn typography"
 		>
-		    Main Menu
+		    New Game
 		</button>
-	    </Link>
-	    <button
-		onClick={() => handleNewGameButton()}
-		className="component btn typography"
-	    >
-		New Game
-	    </button>
+		<Link to="/">
+		    <button className="component btn typography">
+			Main Menu
+		    </button>
+		</Link>
+	    </div>
 	</div>
     )
     else return (
@@ -108,14 +111,16 @@ export default function Game({ size }) {
 	    {loading === false ?
 	     <>
 		 <div id="header">
-		     <img src="/pokemon.svg" />
+		     <Link to="/">
+			 <img src="/pokemon.svg" />
+		     </Link>
 		     <div className="component typography">
 			 <p>Score: {score}</p>
 			 <p>High Score: {highScore}</p>
 		     </div>
 		 </div>
 		 <div className="container">
-		     {allPokemonData.map((pokemonData) => (
+		     {pokemonList.map((pokemonData) => (
 			 <button
 			     key={pokemonData.id}
 			     className="component btn"
@@ -124,7 +129,7 @@ export default function Game({ size }) {
 			     }}
 			     style={{ backgroundColor: "#D8BFD8" }}
 			 >
-			     <PokeCard data={pokemonData} />
+			     <PokeCard pokemon={pokemonData} />
 			 </button>
 		     ))}
 		 </div>
@@ -132,7 +137,8 @@ export default function Game({ size }) {
 	     :
 	     <div className="container">
 		 <h1 className=" typography">LOADING</h1>
-	     </div>}		 
+	     </div>
+	    }		 
 	</>
     );
 }
