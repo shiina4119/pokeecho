@@ -1,4 +1,4 @@
-import "./PokeCard.css";
+import "../styles/PokeCard.css";
 
 export default function PokeCard({ data }) {
     return (

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import PokeCard from "./PokeCard";
-import "./Game.css";
-import { createRandomArray } from "./utilities";
+import { Link } from "react-router-dom";
+import PokeCard from "../components/PokeCard";
+import "../styles/Game.css";
+import { createRandomArray } from "../utilities";
 
 export default function Game({ size }) {
     const [idList, setIdList] = useState(createRandomArray(size));
@@ -62,7 +63,6 @@ export default function Game({ size }) {
 	setIdList(createRandomArray(size));
 	setClickedIdList([]);
     }
-    
     return (
 	<>
 	    <div id="header">
@@ -89,6 +89,13 @@ export default function Game({ size }) {
 		     ))}
 		 </div>
 		 <div className="container">
+		     <Link to="/">
+			 <button
+		     	     className="component btn typography"
+			 >
+			     Main Menu
+			 </button>
+		     </Link>
 		     <button
 			 onClick={() => handleNewGameButton()}
 			 className="component btn typography"
@@ -100,8 +107,7 @@ export default function Game({ size }) {
 	     :
 	     <div className="container">
 		 <h1 className=" typography">LOADING</h1>
-	     </div>}
-		 
+	     </div>}		 
 	</>
     );
 }
