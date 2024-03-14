@@ -22,7 +22,8 @@ export default function Game({ size }) {
 	);
 
 	Promise.all(promises)
-	    .then((responses) => Promise.all(responses.map((res) => res.json())))
+	    .then((responses) => Promise.all(responses.map((res) =>
+		res.json())))
 	    .then((data) => {
 		setAllPokemonData(data);
 	    })
@@ -33,27 +34,33 @@ export default function Game({ size }) {
 	    .finally(() => {
 		setLoading(false);
 	    });
+	return (() => {
+	    setAllPokemonData([]);
+	    setError(null);
+	    setLoading(false);
+	})
     }, [idList]);
 
     function handleCardClick(id) {
-	if (!gameOver) {
-	    if (clickedIdList.includes(id)) {
-		console.log("game over");
+	if (clickedIdList.includes(id)) {
+	    setGameOver(true);
+	    if (score > highScore) {
+		setHighScore(score);
+	    }
+	}
+	else {
+	    setClickedIdList([...clickedIdList, id]);
+	    setScore(score + 1);
+	    if (score + 1 === size) {
+		setHighScore(size);
 		setGameOver(true);
-		if (score > highScore) {
-		    setHighScore(score);
-		}
-		setScore(0);
-		setClickedIdList([]);
-	    } else {
-		setClickedIdList([...clickedIdList, id]);
-		setScore(score + 1);
+	    }
+	    else {
 		setAllPokemonData((prevPokemonData) =>
-		    [...prevPokemonData].sort(() => Math.random() - 0.5)
+		    [...prevPokemonData].sort(() =>
+			Math.random() - 0.5)
 		);
 	    }
-	} else {
-	    console.log("try harder");
 	}
     }
 
@@ -63,17 +70,50 @@ export default function Game({ size }) {
 	setIdList(createRandomArray(size));
 	setClickedIdList([]);
     }
-    return (
-	<>
-	    <div id="header">
-		<img src="/pokemon.svg" />
-		<div className="component typography">
-		    <p>Score: {score}</p>
-		    <p>High Score: {highScore}</p>
-		</div>
+
+    if (gameOver === true) return (
+	<div className="banner component">
+	    {score === size ?
+	     <>
+		 <div className="typography" style={{ fontSize: "24px" }}>You Won!</div>
+		 <img src="/cat-flower.jpeg" />
+	     </>
+	     :
+	     <>
+		 <div className="typography" style={{ fontSize: "24px" }}>Game Over</div>
+		 <img src="/laugh-point.gif" />
+	     </>
+	    }
+	    <div className="typography">
+		<p>Score: {score}</p>
+		<p>High Score: {highScore}</p>
 	    </div>
+	    <Link to="/">
+		<button
+		    className="component btn typography"
+		>
+		    Main Menu
+		</button>
+	    </Link>
+	    <button
+		onClick={() => handleNewGameButton()}
+		className="component btn typography"
+	    >
+		New Game
+	    </button>
+	</div>
+    )
+    else return (
+	<>
 	    {loading === false ?
 	     <>
+		 <div id="header">
+		     <img src="/pokemon.svg" />
+		     <div className="component typography">
+			 <p>Score: {score}</p>
+			 <p>High Score: {highScore}</p>
+		     </div>
+		 </div>
 		 <div className="container">
 		     {allPokemonData.map((pokemonData) => (
 			 <button
@@ -88,21 +128,6 @@ export default function Game({ size }) {
 			 </button>
 		     ))}
 		 </div>
-		 <div className="container">
-		     <Link to="/">
-			 <button
-		     	     className="component btn typography"
-			 >
-			     Main Menu
-			 </button>
-		     </Link>
-		     <button
-			 onClick={() => handleNewGameButton()}
-			 className="component btn typography"
-		     >
-			 New Game
-		     </button>
-		 </div>
 	     </>
 	     :
 	     <div className="container">
@@ -111,3 +136,4 @@ export default function Game({ size }) {
 	</>
     );
 }
+ 
