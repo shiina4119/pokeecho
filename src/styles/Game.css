@@ -19,11 +19,28 @@
     padding: 2em 1em;
 }
 
+.banner {
+    margin: auto;
+    width: 500px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2em 4em;
+    padding: 8em 4em;
+}
+
+.banner img {
+    height: 200px;
+    width: 200px;
+}
+
 .component {
     border: 2px solid;
     padding: 0.25em 0.5em;
     box-shadow: 2px 2px 0px 0px;
     position: relative;
+    background-color: #ffffff;
 }
 
 .btn {
