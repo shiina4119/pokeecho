@@ -67,7 +67,7 @@ export default function Game({ size }) {
 	<>
 	    <div id="header">
 		<img src="/pokemon.svg" />
-		<div className="typography">
+		<div className="component typography">
 		    <p>Score: {score}</p>
 		    <p>High Score: {highScore}</p>
 		</div>
@@ -78,10 +78,11 @@ export default function Game({ size }) {
 		     {allPokemonData.map((pokemonData) => (
 			 <button
 			     key={pokemonData.id}
-			     className="btn"
+			     className="component btn"
 			     onClick={() => {
 				 handleCardClick(pokemonData.id);
 			     }}
+			     style={{ backgroundColor: "#D8BFD8" }}
 			 >
 			     <PokeCard data={pokemonData} />
 			 </button>
@@ -90,7 +91,7 @@ export default function Game({ size }) {
 		 <div className="container">
 		     <button
 			 onClick={() => handleNewGameButton()}
-			 className="btn typography"
+			 className="component btn typography"
 		     >
 			 New Game
 		     </button>
