@@ -10,7 +10,7 @@ export default function App() {
 	    </div>
 	    <div className="container">
 		{difficulty.map(d =>
-		    <Link to={d}>
+		    <Link key={d} to={d}>
 			<button className="component btn typography">
 			    {d.toUpperCase()}
 			</button>
